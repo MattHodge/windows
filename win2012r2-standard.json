@@ -96,7 +96,9 @@
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
         "floppy/win2012r2-standard/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-sshd.cmd",
+        "floppy/install_ps5.ps1",
+        "floppy/install_ps5.cmd"
       ],
       "guest_os_type": "win-2012",
       "headless": "{{ user `headless` }}",
@@ -142,10 +144,6 @@
     }
   ],
   "provisioners": [
-    {
-      "type": "powershell",
-      "script": "script/install_choco_and_boxstarter.ps1"
-    },
     {
       "type": "powershell",
       "script": "script/provision.ps1"

@@ -5,29 +5,12 @@ netsh advfirewall firewall add rule name="Remote Desktop" dir=in localport=3389 
 
 Update-ExecutionPolicy -Policy Unrestricted
 
-Install-WindowsUpdate -AcceptEula
+# Install-WindowsUpdate -AcceptEula
 
-if(Test-PendingReboot){ Invoke-Reboot }
+# if(Test-PendingReboot){ Invoke-Reboot }
 
 Write-BoxstarterMessage "Setting up winrm"
 netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
-
-$enableArgs=@{Force=$true}
-try {
- $command=Get-Command Enable-PSRemoting
-  if($command.Parameters.Keys -contains "skipnetworkprofilecheck"){
-      $enableArgs.skipnetworkprofilecheck=$true
-  }
-}
-catch {
-  $global:error.RemoveAt(0)
-}
-Enable-PSRemoting @enableArgs
-Enable-WSManCredSSP -Force -Role Server
-winrm set winrm/config/client/auth '@{Basic="true"}'
-winrm set winrm/config/service/auth '@{Basic="true"}'
-winrm set winrm/config/service '@{AllowUnencrypted="true"}'
-Write-BoxstarterMessage "winrm setup complete"
 
 Write-Host "Enabling file sharing firewale rules"
 netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=yes
