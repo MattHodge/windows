@@ -135,7 +135,7 @@
   "post-processors": [
     {
       "compression_level": 1,
-      "keep_input_artifact": false,
+      "keep_input_artifact": true,
       "output": "box/{{.Provider}}/win2012r2-standard-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
       "type": "vagrant",
       "vagrantfile_template": "tpl/vagrantfile-win2012r2-standard.tpl"
@@ -153,9 +153,7 @@
         "script/cmtool.bat",
         "script/vmtool.bat",
         "script/clean.bat",
-        "script/ultradefrag.bat",
-        "script/uninstall-7zip.bat",
-        "script/sdelete.bat"
+        "script/uninstall-7zip.bat"
       ],
       "type": "windows-shell"
     }
