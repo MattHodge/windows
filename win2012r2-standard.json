@@ -88,22 +88,6 @@
       "restart_timeout": "2h"
     },
     {
-      "type": "powershell",
-      "script": "script/windows_updates.ps1"
-    },
-    {
-      "type": "windows-restart",
-      "restart_timeout": "2h"
-    },
-    {
-      "type": "powershell",
-      "script": "script/windows_updates_cleanup.ps1"
-    },
-    {
-      "type": "windows-restart",
-      "restart_timeout": "2h"
-    },
-    {
       "environment_vars": [
         "CM={{user `cm`}}",
         "CM_VERSION={{user `cm_version`}}",
