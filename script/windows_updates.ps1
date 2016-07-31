@@ -9,4 +9,4 @@ Write-BoxstarterMessage "Setting PS ExecutionPolicy to Unrestricted"
 Update-ExecutionPolicy -Policy Unrestricted
 
 Write-BoxstarterMessage "Installing Windows Updates"
-# Install-WindowsUpdate -AcceptEula
+Install-WindowsUpdate -AcceptEula
