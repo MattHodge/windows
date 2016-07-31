@@ -113,3 +113,8 @@ For Windows, the ISO path variables are:
 You can also override these setting, such as with
 
     WIN81_X64_PRO := file:///Volumes/MSDN/en_windows_8.1_professional_vl_with_update_x64_dvd_4065194.iso
+
+# Personal Docs
+
+* Set an environment variable `ATLAS_TOKEN` from [https://atlas.hashicorp.com/settings/tokens](https://atlas.hashicorp.com/settings/tokens).
+* Update `version` variable in the `.json` for the image.

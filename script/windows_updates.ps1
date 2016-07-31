@@ -1,4 +1,4 @@
-ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Stop'
 $schTaskName = Get-Random
 $scriptName = "$($schTaskName).ps1"
 $schTaskScript = "start-sleep -seconds 5;
