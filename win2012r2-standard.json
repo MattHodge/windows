@@ -149,8 +149,25 @@
   ],
   "provisioners": [
     {
+      "type": "windows-restart"
+    },
+    {
       "type": "powershell",
-      "script": "script/provision.ps1"
+      "script": "script/windows_updates.ps1"
+    },
+    {
+      "type": "windows-restart"
+    },
+    {
+      "type": "powershell",
+      "script": "script/windows_updates.ps1"
+    },
+    {
+      "type": "windows-restart"
+    },
+    {
+      "type": "powershell",
+      "script": "script/windows_updates_cleanup.ps1"
     },
     {
       "environment_vars": [

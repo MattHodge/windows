@@ -1,20 +1,5 @@
 $ErrorActionPreference = "Stop"
 
-Enable-RemoteDesktop
-netsh advfirewall firewall add rule name="Remote Desktop" dir=in localport=3389 protocol=TCP action=allow
-
-Update-ExecutionPolicy -Policy Unrestricted
-
-# Install-WindowsUpdate -AcceptEula
-
-# if(Test-PendingReboot){ Invoke-Reboot }
-
-Write-BoxstarterMessage "Setting up winrm"
-netsh advfirewall firewall add rule name="WinRM-HTTP" dir=in localport=5985 protocol=TCP action=allow
-
-Write-Host "Enabling file sharing firewale rules"
-netsh advfirewall firewall set rule group="File and Printer Sharing" new enable=yes
-
 Write-Host "Cleaning SxS..."
 Dism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase
 
