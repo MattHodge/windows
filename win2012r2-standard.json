@@ -13,7 +13,9 @@
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
         "floppy/win2012r2-standard/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-sshd.cmd",
+        "floppy/install_ps5.ps1",
+        "floppy/install_ps5.cmd"
       ],
       "guest_os_type": "windows8srv-64",
       "headless": "{{ user `headless` }}",
@@ -48,7 +50,9 @@
         "floppy/passwordchange.bat",
         "floppy/powerconfig.bat",
         "floppy/win2012r2-standard/Autounattend.xml",
-        "floppy/zz-start-sshd.cmd"
+        "floppy/zz-start-sshd.cmd",
+        "floppy/install_ps5.ps1",
+        "floppy/install_ps5.cmd"
       ],
       "guest_os_type": "Windows2012_64",
       "hard_drive_interface": "sata",
