@@ -1,27 +1,12 @@
-$wuInstallExe = Join-Path $env:TEMP 'WUInstallAMD64.exe'
+$wuInstallExe = Join-Path "$($env:windir)\SYSTEM32" 'WUInstallAMD64.exe'
 
 if (!(Test-Path -Path $wuInstallExe))
 {
     Invoke-WebRequest -UseBasicParsing -Uri 'https://dl.dropboxusercontent.com/u/727435/Tools/WUInstallAMD64.exe' -OutFile $wuInstallExe
 }
 
-
 $schTaskName = Get-Random
 $scriptName = "$($schTaskName).ps1"
-<#
-$schTaskScript = "start-sleep -seconds 5;
-`$npipeClient = new-object System.IO.Pipes.NamedPipeClientStream(
-`$env:ComputerName, 'task', [System.IO.Pipes.PipeDirection]::Out);
-`$npipeclient.connect();
-`$pipeWriter = new-object System.IO.StreamWriter(`$npipeClient);
-`$pipeWriter.AutoFlush = `$true;
-Import-Module -Name Boxstarter.Bootstrapper
-Install-WindowsUpdate -AcceptEula | foreach-object {} {`$pipewriter.writeline(`$_)} {
-    `$pipewriter.writeline(`"SCHEDULED_TASK_DONE: `$LastExitCode`");
-    `$pipewriter.dispose();
-    `$npipeclient.dispose()
-}"
-#>
 
 [scriptblock]$schTaskScript = {
     Start-Sleep -Seconds 5
@@ -29,7 +14,7 @@ Install-WindowsUpdate -AcceptEula | foreach-object {} {`$pipewriter.writeline(`$
     $npipeclient.connect()
     $pipeWriter = new-object System.IO.StreamWriter($npipeClient)
     $pipeWriter.AutoFlush = $true
-    & $wuInstallExe /install /autoaccepteula /silent | foreach-object {} {$pipewriter.writeline($_)} {
+    C:\WINDOWS\SYSTEM32\WUInstallAMD64.exe /install /autoaccepteula /silent | foreach-object {} {$pipewriter.writeline($_)} {
         $pipewriter.writeline("SCHEDULED_TASK_DONE: $LastExitCode")
         $pipewriter.dispose()
         $npipeclient.dispose()
@@ -45,7 +30,8 @@ Start-Process -FilePath 'schtasks' -ArgumentList "/create /tn $($schTaskName) /r
 
 Start-Sleep -Seconds 3
 
-Write-Output "Running Scheduled Task"
+
+Write-Output "$(get-date -Format s) Running Scheduled Task"
 try
 {
     $npipeServer = new-object System.IO.Pipes.NamedPipeServerStream('task', [System.IO.Pipes.PipeDirection]::In)
@@ -71,7 +57,7 @@ finally
     $pipereader.dispose()
     $npipeserver.dispose()
 
-    Write-Output "Removing Scheduled Task"
+    Write-Output "$(get-date -Format s) Removing Scheduled Task"
     Start-Process -FilePath 'schtasks' -ArgumentList "SchTasks /Delete /TN $($schTaskName)"
 
     $host.setshouldexit($exit_code)

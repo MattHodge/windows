@@ -89,6 +89,26 @@
       "restart_timeout": "2h"
     },
     {
+      "type": "powershell",
+      "script": "script/windows_updates.ps1"
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "2h"
+    },
+    {
+      "type": "powershell",
+      "script": "script/windows_updates.ps1"
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "2h"
+    },
+    {
+      "type": "powershell",
+      "script": "script/windows_updates_cleanup.ps1"
+    },
+    {
       "environment_vars": [
         "CM={{user `cm`}}",
         "CM_VERSION={{user `cm_version`}}",
@@ -99,7 +119,9 @@
         "script/cmtool.bat",
         "script/vmtool.bat",
         "script/clean.bat",
-        "script/uninstall-7zip.bat"
+        "script/ultradefrag.bat",
+        "script/uninstall-7zip.bat",
+        "script/sdelete.bat"
       ],
       "type": "windows-shell"
     }
