@@ -53,7 +53,7 @@
       "winrm_username": "vagrant"
     }
   ],
-  "post-processors": [
+  "post-processors": [[
     {
       "compression_level": 1,
       "keep_input_artifact": false,
@@ -70,11 +70,10 @@
       "artifact_type": "vagrant.box",
       "metadata": {
         "provider": "virtualbox",
-        "version": "{{user `version`}}",
-        "created_at": "{{timestamp}}"
+        "version": "{{user `version`}}"
       }
     }
-  ],
+  ]],
   "provisioners": [
     {
       "type": "windows-restart",
