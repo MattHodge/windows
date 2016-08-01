@@ -9,7 +9,6 @@ $schTaskName = Get-Random
 $scriptName = "$($schTaskName).ps1"
 
 [scriptblock]$schTaskScript = {
-    Start-Sleep -Seconds 5
     $npipeClient = new-object System.IO.Pipes.NamedPipeClientStream($env:ComputerName, 'task', [System.IO.Pipes.PipeDirection]::Out)
     $npipeclient.connect()
     $pipeWriter = new-object System.IO.StreamWriter($npipeClient)
@@ -27,9 +26,6 @@ Set-Content -Path $scriptPath -Value $schTaskScript -Force
 
 Write-Output "Creating Scheduled Task"
 Start-Process -FilePath 'schtasks' -ArgumentList "/create /tn $($schTaskName) /ru vagrant /rp vagrant /sc once /st 00:00 /sd 01/01/2005 /f /tr ""powershell -executionpolicy unrestricted -File '$($scriptPath)'""" -Wait -NoNewWindow
-
-Start-Sleep -Seconds 3
-
 
 Write-Output "$(get-date -Format s) Running Scheduled Task"
 try
