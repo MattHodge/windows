@@ -1,8 +1,6 @@
-param (
-    $KB,
-    $KBFileName,
-    $DownloadURI
-)
+$KB = $env:KB
+$KBFileName = $env:KBFileName
+$KBDownloadURI = $env:KBDownloadURI
 
 # https://download.microsoft.com/download/D/B/1/DB1F29FC-316D-481E-B435-1654BA185DCF/Windows8.1-KB2919355-x64.msu
 
@@ -26,7 +24,7 @@ $scriptName = "$($schTaskName).ps1"
     param (
         $KB,
         $KBFileName,
-        $DownloadURI
+        $KBDownloadURI
     )
     $npipeClient = new-object System.IO.Pipes.NamedPipeClientStream($env:ComputerName, 'task', [System.IO.Pipes.PipeDirection]::Out)
     $npipeclient.connect()
@@ -38,7 +36,7 @@ $scriptName = "$($schTaskName).ps1"
     if (!(Test-Path -Path $updatePath))
     {
         $pipewriter.writeline("$(get-date -Format s) Downloading update to $($updatePath)")
-        Invoke-WebRequest -UseBasicParsing -Uri $DownloadURI -OutFile $updatePath
+        Invoke-WebRequest -UseBasicParsing -Uri $KBDownloadURI -OutFile $updatePath
         $pipewriter.writeline("$(get-date -Format s) Finished Downloading Update")
     }
 
@@ -56,7 +54,7 @@ $scriptPath = Join-Path $env:TEMP $scriptName
 Set-Content -Path $scriptPath -Value $schTaskScript -Force
 
 Write-Output "Creating Scheduled Task"
-Start-Process -FilePath 'schtasks' -ArgumentList "/create /tn $($schTaskName) /ru vagrant /rp vagrant /sc once /st 00:00 /sd 01/01/2005 /f /tr ""powershell -executionpolicy unrestricted -File '$($scriptPath)' $KB $KBFileName $DownloadURI""" -Wait -NoNewWindow
+Start-Process -FilePath 'schtasks' -ArgumentList "/create /tn $($schTaskName) /ru vagrant /rp vagrant /sc once /st 00:00 /sd 01/01/2005 /f /tr ""powershell -executionpolicy unrestricted -File '$($scriptPath)' $KB $KBFileName $KBDownloadURI""" -Wait -NoNewWindow
 
 Start-Sleep -Seconds 5
 

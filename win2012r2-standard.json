@@ -53,27 +53,29 @@
       "winrm_username": "vagrant"
     }
   ],
-  "post-processors": [[
-    {
-      "compression_level": 1,
-      "keep_input_artifact": false,
-      "output": "box/{{.Provider}}/win2012r2-standard-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
-      "type": "vagrant",
-      "vagrantfile_template": "tpl/vagrantfile-win2012r2-standard.tpl"
-    },
-    {
-      "type": "atlas",
-      "only": [
-        "virtualbox-iso"
-      ],
-      "artifact": "MattHodge/{{user `atlas_artifact_name`}}",
-      "artifact_type": "vagrant.box",
-      "metadata": {
-        "provider": "virtualbox",
-        "version": "{{user `version`}}"
+  "post-processors": [
+    [
+      {
+        "compression_level": 1,
+        "keep_input_artifact": false,
+        "output": "box/{{.Provider}}/win2012r2-standard-{{user `cm`}}{{user `cm_version`}}-{{user `version`}}.box",
+        "type": "vagrant",
+        "vagrantfile_template": "tpl/vagrantfile-win2012r2-standard.tpl"
+      },
+      {
+        "type": "atlas",
+        "only": [
+          "virtualbox-iso"
+        ],
+        "artifact": "MattHodge/{{user `atlas_artifact_name`}}",
+        "artifact_type": "vagrant.box",
+        "metadata": {
+          "provider": "virtualbox",
+          "version": "{{user `version`}}"
+        }
       }
-    }
-  ]],
+    ]
+  ],
   "provisioners": [
     {
       "type": "windows-restart",
@@ -81,7 +83,12 @@
     },
     {
       "type": "powershell",
-      "script": "script/install_specifc_kb.ps1 -KB 'KB2919442' -KBFileName 'Windows8.1-KB2919442-x64.msu' -DownloadURI 'http://192.168.2.115:8080/HTTPServer/Windows8.1-KB2919442-x64.msu'"
+      "environment_vars": [
+        "KB=KB2919442",
+        "KBFileName=Windows8.1-KB2919442-x64.msu",
+        "KBDownloadURI=http://192.168.2.115:8080/HTTPServer/Windows8.1-KB2919442-x64.msu"
+      ],
+      "script": "script/install_specifc_kb.ps1"
     },
     {
       "type": "windows-restart",
@@ -89,7 +96,12 @@
     },
     {
       "type": "powershell",
-      "script": "script/install_specifc_kb.ps1 -KB 'KB2919355' -KBFileName 'Windows8.1-KB2919355-x64.msu' -DownloadURI 'http://192.168.2.115:8080/HTTPServer/Windows8.1-KB2919355-x64.msu'"
+      "environment_vars": [
+        "KB=KB2919355",
+        "KBFileName=Windows8.1-KB2919355-x64.msu",
+        "KBDownloadURI=http://192.168.2.115:8080/HTTPServer/Windows8.1-KB2919355-x64.msu"
+      ],
+      "script": "script/install_specifc_kb.ps1"
     },
     {
       "type": "windows-restart",
