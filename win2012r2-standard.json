@@ -81,6 +81,22 @@
     },
     {
       "type": "powershell",
+      "script": "script/install_specifc_kb.ps1 -KB 'KB2919442' -KBFileName 'Windows8.1-KB2919442-x64.msu' -DownloadURI 'http://192.168.2.115:8080/HTTPServer/Windows8.1-KB2919442-x64.msu'"
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "2h"
+    },
+    {
+      "type": "powershell",
+      "script": "script/install_specifc_kb.ps1 -KB 'KB2919355' -KBFileName 'Windows8.1-KB2919355-x64.msu' -DownloadURI 'http://192.168.2.115:8080/HTTPServer/Windows8.1-KB2919355-x64.msu'"
+    },
+    {
+      "type": "windows-restart",
+      "restart_timeout": "2h"
+    },
+    {
+      "type": "powershell",
       "script": "script/windows_updates.ps1"
     },
     {
